@@ -37,12 +37,25 @@ export default function App() {
     [scrollToShop],
   );
 
+  const handlePickBrand = useCallback(
+    (brandEn: string) => {
+      setFilters({ ...EMPTY_FILTERS, brand: brandEn });
+      scrollToShop();
+    },
+    [scrollToShop],
+  );
+
+  const handleAllProducts = useCallback(() => {
+    setFilters(EMPTY_FILTERS);
+    scrollToShop();
+  }, [scrollToShop]);
+
   const clearFilters = useCallback(() => setFilters(EMPTY_FILTERS), []);
 
   return (
     <CartProvider>
       <div className="min-h-screen bg-paper text-inkdeep">
-        <Nav />
+        <Nav onCategory={handlePickCategory} onBrand={handlePickBrand} onAllProducts={handleAllProducts} />
         <main>
           <Hero onSearch={handleSearch} />
           <Categories onPick={handlePickCategory} />
