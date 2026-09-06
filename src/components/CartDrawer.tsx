@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { faDigits, faNumber, faPrice } from "../data";
 import { useCart } from "../store";
+import { useAdminStore, type OrderItem } from "../adminStore";
 import { IconArrow, IconCart, IconCheck, IconClose, IconMinus, IconPlus, IconTrash } from "../icons";
 
 const FREE_SHIPPING = 1000000;
 
 export default function CartDrawer() {
   const { items, isOpen, closeCart, setQty, remove, total, count, clear } = useCart();
+  const { placeOrder } = useAdminStore();
   const [ordered, setOrdered] = useState(false);
-  const [orderNo] = useState(() => Math.floor(100000 + Math.random() * 900000));
+  const [orderNo, setOrderNo] = useState(0);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -33,6 +35,14 @@ export default function CartDrawer() {
   const progress = Math.min((total / FREE_SHIPPING) * 100, 100);
 
   const checkout = () => {
+    const orderItems: OrderItem[] = items.map(({ product: p, qty }) => ({
+      name: p.name,
+      qty,
+      price: p.price,
+      img: p.img,
+    }));
+    const no = placeOrder("کاربر مهمان", orderItems);
+    setOrderNo(no);
     setOrdered(true);
     clear();
   };

@@ -1,21 +1,20 @@
 import { useMemo, useState } from "react";
 import {
   CATEGORIES,
-  PRODUCTS,
   PRICE_RANGES,
   discountOf,
   faDigits,
   faNumber,
   faPrice,
   type Filters,
-  type Product,
 } from "../data";
+import { useAdminStore, type AdminProduct } from "../adminStore";
 import { useCart } from "../store";
 import { IconCart, IconClose, IconHeart } from "../icons";
 import { Reveal, SectionHead, Stars } from "../ui";
 
 /* ---------- product card ---------- */
-export function ProductCard({ p, delay = 0 }: { p: Product; delay?: number }) {
+export function ProductCard({ p, delay = 0 }: { p: AdminProduct; delay?: number }) {
   const { add } = useCart();
   const [liked, setLiked] = useState(false);
   const off = discountOf(p.price, p.oldPrice);
@@ -79,13 +78,32 @@ export function ProductCard({ p, delay = 0 }: { p: Product; delay?: number }) {
             </span>
           </div>
 
-          <button
-            onClick={() => add(p)}
-            className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-ink py-3 text-sm font-bold text-cream transition-all duration-300 hover:bg-coraldeep hover:shadow-glow"
-          >
-            <IconCart className="size-[18px]" />
-            افزودن به سبد خرید
-          </button>
+          {p.stock === 0 ? (
+            <>
+              <span className="mt-3 text-[0.7rem] font-bold text-red-500">در حال حاضر ناموجود است</span>
+              <button
+                disabled
+                className="mt-2 w-full cursor-not-allowed rounded-lg bg-sand py-3 text-sm font-bold text-mist"
+              >
+                ناموجود
+              </button>
+            </>
+          ) : (
+            <>
+              {p.stock < 5 && (
+                <span className="mt-3 text-[0.7rem] font-bold text-gold">
+                  فقط {faDigits(p.stock)} عدد در انبار باقی مانده
+                </span>
+              )}
+              <button
+                onClick={() => add(p)}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-ink py-3 text-sm font-bold text-cream transition-all duration-300 hover:bg-coraldeep hover:shadow-glow"
+              >
+                <IconCart className="size-[18px]" />
+                افزودن به سبد خرید
+              </button>
+            </>
+          )}
         </div>
       </article>
     </Reveal>
@@ -94,10 +112,11 @@ export function ProductCard({ p, delay = 0 }: { p: Product; delay?: number }) {
 
 /* ---------- featured grid with filtering ---------- */
 export default function Featured({ filters, onClear }: { filters: Filters; onClear: () => void }) {
+  const { products: shopProducts } = useAdminStore();
   const list = useMemo(() => {
     const range = PRICE_RANGES.find((r) => r.id === filters.price) ?? PRICE_RANGES[0];
     const q = filters.q.trim().toLowerCase();
-    const filtered = PRODUCTS.filter((p) => {
+    const filtered = shopProducts.filter((p) => p.visible).filter((p) => {
       if (q && !(p.name.includes(filters.q.trim()) || p.brand.toLowerCase().includes(q) || p.brandFa.includes(filters.q.trim())))
         return false;
       if (filters.cat !== "all" && p.catId !== filters.cat) return false;
@@ -123,7 +142,7 @@ export default function Featured({ filters, onClear }: { filters: Filters; onCle
         break;
     }
     return sorted;
-  }, [filters]);
+  }, [filters, shopProducts]);
 
   const catName = CATEGORIES.find((c) => c.id === filters.cat)?.name;
   const hasFilter =
