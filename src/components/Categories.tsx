@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { CATEGORIES, faDigits } from "../data";
 import { IconArrow } from "../icons";
 import { Reveal, SectionHead } from "../ui";
 
 export default function Categories({ onPick }: { onPick: (catId: string) => void }) {
   return (
-    <section id="categories" className="paper-grain relative pt-44 pb-24 md:pt-52">
+    <section id="categories" className="paper-grain relative pt-14 pb-24 md:pt-16">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHead
@@ -14,13 +15,13 @@ export default function Categories({ onPick }: { onPick: (catId: string) => void
             text="محصولات مورد نیاز شما برای نوشتن، طراحی، یادگیری و خلاقیت — در شش دنیای متفاوت."
           />
           <Reveal delay={200} className="mb-2">
-            <a
-              href="#shop"
+            <Link
+              to="/shop"
               className="group flex items-center gap-2 border-b-2 border-gold pb-1 text-sm font-bold text-ink transition-colors hover:text-coraldeep"
             >
               مشاهده همه محصولات
               <IconArrow className="size-4 transition-transform duration-300 group-hover:-translate-x-1.5" />
-            </a>
+            </Link>
           </Reveal>
         </div>
 

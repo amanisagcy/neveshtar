@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BRANDS, FEATURES, IMG } from "../data";
 import {
   IconArrow,
@@ -123,19 +124,19 @@ export default function Experience() {
             </ul>
 
             <Reveal delay={200} className="mt-10 flex flex-wrap items-center gap-5">
-              <a
-                href="#footer"
+              <Link
+                to="/contact"
                 className="group flex items-center gap-3 rounded-lg bg-ink px-7 py-3.5 font-bold text-cream transition-all duration-300 hover:bg-coraldeep hover:shadow-glow"
               >
                 درباره برند ما
                 <IconArrow className="size-4 transition-transform duration-300 group-hover:-translate-x-1" />
-              </a>
-              <a
-                href="#faq"
+              </Link>
+              <Link
+                to="/faq"
                 className="border-b-2 border-gold pb-1 text-sm font-bold text-ink transition-colors hover:text-coraldeep"
               >
                 پرسش‌های پرتکرار
-              </a>
+              </Link>
             </Reveal>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { POSTS } from "../data";
 import { IconArrow, IconCheck, IconMail, IconNib } from "../icons";
 import { Reveal, SectionHead } from "../ui";
@@ -17,17 +18,17 @@ export default function Journal() {
             text="راهنمای خرید، ایده‌های میز کار و داستان‌های پشت قلم‌ها — از سردبیری که خودش هم قلم‌باز است."
           />
           <Reveal delay={200} className="mb-2">
-            <a href="#journal" className="group flex items-center gap-2 border-b-2 border-gold pb-1 text-sm font-bold text-ink transition-colors hover:text-coraldeep">
+            <Link to="/journal" className="group flex items-center gap-2 border-b-2 border-gold pb-1 text-sm font-bold text-ink transition-colors hover:text-coraldeep">
               همه مقالات
               <IconArrow className="size-4 transition-transform duration-300 group-hover:-translate-x-1.5" />
-            </a>
+            </Link>
           </Reveal>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-2">
           {/* featured post */}
           <Reveal variant="right">
-            <a href="#journal" className="group block h-full overflow-hidden rounded-xl border border-sand bg-paper shadow-card transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lift">
+            <Link to="/journal" className="group block h-full overflow-hidden rounded-xl border border-sand bg-paper shadow-card transition-all duration-500 hover:-translate-y-1.5 hover:shadow-lift">
               <div className="relative h-72 overflow-hidden lg:h-[430px]">
                 <img
                   src={featured.img}
@@ -55,14 +56,14 @@ export default function Journal() {
                   <IconArrow className="size-4" />
                 </span>
               </div>
-            </a>
+            </Link>
           </Reveal>
 
           {/* list posts */}
           <div className="flex flex-col divide-y divide-sand">
             {rest.map((p, i) => (
               <Reveal key={p.id} delay={i * 110} variant="left" className="flex-1">
-                <a href="#journal" className="group flex h-full items-center gap-5 py-5 transition-colors lg:py-6">
+                <Link to="/journal" className="group flex h-full items-center gap-5 py-5 transition-colors lg:py-6">
                   <div className="relative h-24 w-28 shrink-0 overflow-hidden rounded-lg sm:h-28 sm:w-36">
                     <img
                       src={p.img}
@@ -86,7 +87,7 @@ export default function Journal() {
                       <span>{p.read}</span>
                     </span>
                   </div>
-                </a>
+                </Link>
               </Reveal>
             ))}
           </div>

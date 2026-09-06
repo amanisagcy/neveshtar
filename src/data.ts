@@ -417,11 +417,11 @@ export const PRICE_RANGES = [
 ];
 
 export const NAV_LINKS = [
-  { label: "صفحه اصلی", href: "#home" },
-  { label: "فروشگاه", href: "#shop" },
-  { label: "دسته‌بندی محصولات", href: "#categories" },
-  { label: "پرفروش‌ترین‌ها", href: "#best" },
-  { label: "تخفیف‌ها", href: "#offers" },
-  { label: "مجله", href: "#journal" },
-  { label: "درباره ما", href: "#about" },
+  { label: "صفحه اصلی", to: "/" },
+  { label: "فروشگاه", to: "/shop" },
+  { label: "دسته‌بندی محصولات", to: "/categories" },
+  { label: "پرفروش‌ترین‌ها", to: "/bestsellers" },
+  { label: "تخفیف‌ها", to: "/offers" },
+  { label: "مجله", to: "/journal" },
+  { label: "درباره ما", to: "/about" },
 ];
