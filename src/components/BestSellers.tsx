@@ -1,14 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { PRODUCTS, faNumber, faPrice } from "../data";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { faNumber, faPrice } from "../data";
+import { useAdminStore } from "../adminStore";
 import { useCart } from "../store";
 import { useInView, useReducedMotion } from "../hooks";
 import { IconArrow, IconCart, IconChevron } from "../icons";
 import { Reveal, SectionHead, Stars } from "../ui";
 
-const ITEMS = [...PRODUCTS].sort((a, b) => b.sold - a.sold);
-
 export default function BestSellers() {
   const { add } = useCart();
+  const { products } = useAdminStore();
+  const ITEMS = useMemo(
+    () => [...products.filter((p) => p.visible)].sort((a, b) => b.sold - a.sold),
+    [products],
+  );
   const reduced = useReducedMotion();
   const trackRef = useRef<HTMLDivElement>(null);
   const [idx, setIdx] = useState(0);

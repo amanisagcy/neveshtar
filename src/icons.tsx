@@ -212,6 +212,77 @@ export const IconPin = (p: P) => (
   </svg>
 );
 
+export const IconGrid = (p: P) => (
+  <svg {...base(p)}>
+    <rect x="4" y="4" width="7" height="7" rx="1.8" />
+    <rect x="13" y="4" width="7" height="7" rx="1.8" />
+    <rect x="4" y="13" width="7" height="7" rx="1.8" />
+    <rect x="13" y="13" width="7" height="7" rx="1.8" />
+  </svg>
+);
+
+export const IconBox = (p: P) => (
+  <svg {...base(p)}>
+    <path d="m12 3 8 4v10l-8 4-8-4V7Z" strokeLinejoin="round" />
+    <path d="m4 7 8 4 8-4M12 11v10" />
+  </svg>
+);
+
+export const IconReceipt = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M6 3.5h12v17l-2.4-1.6-2.4 1.6-2.4-1.6L8.4 20 6 18.5Z" strokeLinejoin="round" />
+    <path d="M9 8.5h6M9 12h6m-6 3.5h3.5" />
+  </svg>
+);
+
+export const IconUsers = (p: P) => (
+  <svg {...base(p)}>
+    <circle cx="9" cy="8.5" r="3.2" />
+    <path d="M3 19.5c1-2.9 3.2-4.3 6-4.3s5 1.4 6 4.3M15.5 5.8a3.2 3.2 0 1 1 0 5.9M17.5 15.4c1.9.5 3.1 1.8 3.7 3.9" />
+  </svg>
+);
+
+export const IconGear = (p: P) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="3.2" />
+    <path d="M12 3.5v2.2m0 12.6v2.2M3.5 12h2.2m12.6 0h2.2M6 6l1.6 1.6M16.4 16.4 18 18M18 6l-1.6 1.6M7.6 16.4 6 18" />
+  </svg>
+);
+
+export const IconLogout = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M14 4.5H7A2.5 2.5 0 0 0 4.5 7v10A2.5 2.5 0 0 0 7 19.5h7M10 12h10m0 0-3.5-3.5M20 12l-3.5 3.5" />
+  </svg>
+);
+
+export const IconEye = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+export const IconEyeOff = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M4 4.5 20 19.5M9.9 6.3A9 9 0 0 1 12 5.8c6 0 9.5 6.2 9.5 6.2a17 17 0 0 1-3 3.6m-2.2 1.5a9 9 0 0 1-4.3 1.1C6 18.2 2.5 12 2.5 12a17 17 0 0 1 4-4.5" />
+    <path d="M9.9 10a3 3 0 0 0 4.1 4.2" />
+  </svg>
+);
+
+export const IconEdit = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M13.5 6 18 10.5 8.5 20H4v-4.5Z" strokeLinejoin="round" />
+    <path d="m15.5 4 2.3-2.3a1.5 1.5 0 0 1 2.1 0l2.4 2.4a1.5 1.5 0 0 1 0 2.1L20 8.5" strokeLinejoin="round" transform="translate(-2 2)" />
+  </svg>
+);
+
+export const IconBell = (p: P) => (
+  <svg {...base(p)}>
+    <path d="M12 4a5.5 5.5 0 0 1 5.5 5.5c0 4 1.5 5.3 1.5 5.3H5s1.5-1.3 1.5-5.3A5.5 5.5 0 0 1 12 4Z" strokeLinejoin="round" />
+    <path d="M10 18a2 2 0 0 0 4 0" />
+  </svg>
+);
+
 export const IconSpark = (p: P) => (
   <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
     <path d="M12 2.5c.5 4.6 2 6.6 6.9 7.4-4.9 1-6.3 2.9-6.9 7.6-.6-4.7-2-6.6-6.9-7.6 4.9-.8 6.4-2.8 6.9-7.4Z" />

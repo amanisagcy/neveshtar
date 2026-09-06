@@ -206,7 +206,19 @@ export function Footer() {
         </div>
 
         <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-cream/10 pt-7 text-[0.8rem] text-sand/55 md:flex-row">
-          <p>© ۱۴۰۴ نوشتار — تمامی حقوق این وب‌سایت محفوظ است.</p>
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span>© ۱۴۰۴ نوشتار — تمامی حقوق این وب‌سایت محفوظ است.</span>
+            <a
+              href="#/admin"
+              className="flex items-center gap-1.5 rounded-full border border-cream/15 px-3.5 py-1.5 font-bold text-sand/70 transition-all duration-300 hover:border-gold hover:text-goldsoft"
+            >
+              <svg viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="5" y="10.5" width="14" height="9" rx="2" />
+                <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
+              </svg>
+              پنل مدیریت
+            </a>
+          </p>
           <p className="flex items-center gap-2">
             ساخته‌شده با
             <svg viewBox="0 0 24 24" className="size-4 text-coral" fill="currentColor" aria-label="عشق">
