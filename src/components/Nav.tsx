@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { BRANDS, CATEGORIES, IMG, PRODUCTS, faDigits } from "../data";
-import { useActiveSection, useScrolled } from "../hooks";
 import { useCart } from "../store";
 import {
   IconArrow,
@@ -14,20 +14,18 @@ import {
 } from "../icons";
 
 const LINKS = [
-  { href: "#home", label: "صفحه اصلی", mega: false },
-  { href: "#shop", label: "فروشگاه", mega: false },
-  { href: "#categories", label: "دسته‌بندی محصولات", mega: true },
-  { href: "#best", label: "پرفروش‌ترین‌ها", mega: false },
-  { href: "#offers", label: "تخفیف‌ها", mega: false },
-  { href: "#journal", label: "مجله", mega: false },
-  { href: "#about", label: "درباره ما", mega: false },
+  { to: "/", label: "صفحه اصلی", mega: false, end: true },
+  { to: "/shop", label: "فروشگاه", mega: false, end: false },
+  { to: "/categories", label: "دسته‌بندی محصولات", mega: true, end: false },
+  { to: "/bestsellers", label: "پرفروش‌ترین‌ها", mega: false, end: false },
+  { to: "/offers", label: "تخفیف‌ها", mega: false, end: false },
+  { to: "/journal", label: "مجله", mega: false, end: false },
+  { to: "/about", label: "درباره ما", mega: false, end: false },
 ];
-
-const SECTION_IDS = LINKS.map((l) => l.href.slice(1));
 
 export function Logo({ dark = false }: { dark?: boolean }) {
   return (
-    <a href="#home" className="group flex items-center gap-2.5" aria-label="نوشتار — صفحه اصلی">
+    <Link to="/" className="group flex items-center gap-2.5" aria-label="نوشتار — صفحه اصلی">
       <span
         className={`grid size-10 place-items-center rounded-lg transition-all duration-500 group-hover:-rotate-6 ${
           dark ? "border border-cream/40 bg-white/12 text-goldsoft" : "bg-ink text-goldsoft"
@@ -41,7 +39,7 @@ export function Logo({ dark = false }: { dark?: boolean }) {
           Neveshtar
         </span>
       </span>
-    </a>
+    </Link>
   );
 }
 
@@ -57,7 +55,6 @@ interface MegaProps {
 }
 
 function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }: MegaProps) {
-
   return (
     <div
       className={`absolute inset-x-0 top-full z-40 hidden transition-all duration-300 ease-out lg:block ${
@@ -70,7 +67,6 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
       <div className="mx-auto max-w-7xl px-4 pt-1 pb-6 md:px-6">
         <div className="overflow-hidden rounded-xl border border-sand/90 bg-cream/95 shadow-lift ring-1 ring-inkdeep/5 backdrop-blur-2xl">
           <div className="grid grid-cols-12 gap-8 p-7 lg:gap-6 lg:p-8">
-            {/* categories */}
             <div className="col-span-6">
               <p className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold tracking-[0.25em] text-mistlight">
                 <span className="h-px w-6 bg-gold" />
@@ -91,17 +87,11 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
                     style={{ transitionDelay: open ? `${80 + i * 45}ms` : "0ms" }}
                   >
                     <span className="relative block size-13 shrink-0 overflow-hidden rounded-lg">
-                      <img
-                        src={c.img}
-                        alt={c.name}
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-112"
-                      />
+                      <img src={c.img} alt={c.name} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-112" />
                     </span>
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center justify-between gap-2">
-                        <span className="truncate text-sm font-black text-inkdeep transition-colors group-hover:text-coraldeep">
-                          {c.name}
-                        </span>
+                        <span className="truncate text-sm font-black text-inkdeep transition-colors group-hover:text-coraldeep">{c.name}</span>
                         <IconArrow className="size-4 shrink-0 text-mistlight opacity-0 transition-all duration-300 group-hover:-translate-x-0.5 group-hover:text-coraldeep group-hover:opacity-100" />
                       </span>
                       <span className="mt-1 block text-[0.68rem] leading-5 text-mistlight">
@@ -113,7 +103,6 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
               </div>
             </div>
 
-            {/* brands */}
             <div className="col-span-3 border-s border-sand/80 ps-6">
               <p className="mb-4 flex items-center gap-2 text-[0.7rem] font-bold tracking-[0.25em] text-mistlight">
                 <span className="h-px w-6 bg-gold" />
@@ -133,18 +122,13 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
                     }`}
                     style={{ transitionDelay: open ? `${160 + i * 40}ms` : "0ms" }}
                   >
-                    <span className="font-latin text-[0.95rem] tracking-[0.08em] text-ink transition-colors group-hover:text-coraldeep">
-                      {b.en}
-                    </span>
-                    <span className="text-[0.65rem] font-semibold text-mistlight transition-colors group-hover:text-gold">
-                      {b.fa}
-                    </span>
+                    <span className="font-latin text-[0.95rem] tracking-[0.08em] text-ink transition-colors group-hover:text-coraldeep">{b.en}</span>
+                    <span className="text-[0.65rem] font-semibold text-mistlight transition-colors group-hover:text-gold">{b.fa}</span>
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* collection promo */}
             <div className="col-span-3">
               <button
                 tabIndex={open ? 0 : -1}
@@ -157,20 +141,12 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
                 }`}
                 style={{ transitionDelay: open ? "240ms" : "0ms" }}
               >
-                <img
-                  src={IMG.desk}
-                  alt="مجموعه جدید نوشتار"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] group-hover:scale-108"
-                />
+                <img src={IMG.desk} alt="مجموعه جدید نوشتار" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] group-hover:scale-108" />
                 <span className="absolute inset-0 bg-gradient-to-t from-inkdeep/90 via-inkdeep/35 to-inkdeep/10" aria-hidden />
-                <span className="absolute top-4 start-4 rounded-full bg-coral px-3 py-1 text-[0.65rem] font-bold text-cream">
-                  مجموعه جدید
-                </span>
+                <span className="absolute top-4 start-4 rounded-full bg-coral px-3 py-1 text-[0.65rem] font-bold text-cream">مجموعه جدید</span>
                 <span className="absolute inset-x-5 bottom-5">
                   <span className="block font-callig text-xl leading-[1.9] text-cream">پاییز با قلمِ تازه</span>
-                  <span className="mt-1 block text-xs leading-6 text-sand/85">
-                    دفترها، پلنرها و قلم‌های فصل — یک‌جا ببینید.
-                  </span>
+                  <span className="mt-1 block text-xs leading-6 text-sand/85">دفترها، پلنرها و قلم‌های فصل — یک‌جا ببینید.</span>
                   <span className="mt-3 inline-flex items-center gap-2 text-xs font-black text-goldsoft transition-all duration-300 group-hover:gap-3.5">
                     مشاهده همه محصولات
                     <IconArrow className="size-3.5" />
@@ -180,7 +156,6 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
             </div>
           </div>
 
-          {/* quick access strip */}
           <div className="flex flex-wrap items-center justify-between gap-3 border-t border-sand/80 bg-paper/70 px-8 py-3.5">
             <div className="flex flex-wrap items-center gap-2 text-xs font-bold text-mist">
               <span className="text-mistlight">دسترسی سریع:</span>
@@ -194,22 +169,22 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
               >
                 همه محصولات
               </button>
-              <a
+              <Link
                 tabIndex={open ? 0 : -1}
-                href="#best"
+                to="/bestsellers"
                 onClick={close}
                 className="rounded-full border border-sand bg-cream px-3.5 py-1.5 text-inkdeep transition-all hover:border-coral hover:text-coraldeep"
               >
                 پرفروش‌ترین‌ها
-              </a>
-              <a
+              </Link>
+              <Link
                 tabIndex={open ? 0 : -1}
-                href="#offers"
+                to="/offers"
                 onClick={close}
                 className="rounded-full border border-sand bg-cream px-3.5 py-1.5 text-inkdeep transition-all hover:border-coral hover:text-coraldeep"
               >
                 تخفیف‌های فعال
-              </a>
+              </Link>
             </div>
             <p className="flex items-center gap-2 text-[0.7rem] font-semibold text-mist">
               <IconTruck className="size-4 text-gold" />
@@ -223,15 +198,8 @@ function MegaPanel({ open, onEnter, onLeave, onCategory, onBrand, onAll, close }
 }
 
 /* ---------- main nav ---------- */
-interface NavProps {
-  onCategory: (catId: string) => void;
-  onBrand: (brandEn: string) => void;
-  onAllProducts: () => void;
-}
-
-export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
-  const scrolled = useScrolled(40);
-  const active = useActiveSection(SECTION_IDS);
+export default function Nav() {
+  const navigate = useNavigate();
   const { count, openCart } = useCart();
 
   const [drawer, setDrawer] = useState(false);
@@ -254,101 +222,75 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
     };
   }, [drawer]);
 
-  const go = (href: string) => {
-    setDrawer(false);
-    const el = document.getElementById(href.slice(1));
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const catFromMega = (id: string) => {
+  const goShop = (params: string) => {
     setDrawer(false);
     setMegaMobile(false);
-    onCategory(id);
+    navigate(`/shop${params}`);
   };
+
+  const catFromMega = (id: string) => goShop(`?cat=${id}`);
+  const brandFromMega = (en: string) => goShop(`?brand=${en}`);
+  const allFromMega = () => goShop("");
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50">
-        <div
-          className={`transition-all duration-500 ${
-            scrolled
-              ? "border-b border-white/50 bg-white/80 shadow-[0_8px_30px_-12px_rgba(27,38,59,0.15)] backdrop-blur-xl"
-              : "border-b border-white/15 bg-white/0 backdrop-blur-md"
-          }`}
-        >
-          <div
-            className={`mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 transition-all duration-500 md:px-8 ${
-              scrolled ? "py-3" : "py-5"
-            }`}
-          >
-            <Logo dark={!scrolled} />
+      <header className="sticky top-0 z-50 border-b border-sand/70 bg-paper/90 shadow-[0_8px_30px_-18px_rgba(27,38,59,0.25)] backdrop-blur-xl">
+        <div className="relative">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3.5 md:px-8">
+            <Logo />
 
             <nav className="hidden items-center gap-6 xl:flex" aria-label="منوی اصلی">
-              {LINKS.map((l, i) =>
+              {LINKS.map((l) =>
                 l.mega ? (
-                  <div
-                    key={l.href}
-                    onMouseEnter={openMega}
-                    onMouseLeave={scheduleCloseMega}
-                    onFocus={openMega}
-                  >
-                    <a
-                      href={l.href}
+                  <div key={l.to} onMouseEnter={openMega} onMouseLeave={scheduleCloseMega} onFocus={openMega}>
+                    <NavLink
+                      to={l.to}
                       onClick={(e) => {
                         e.preventDefault();
                         setMega((m) => !m);
                       }}
                       aria-expanded={mega}
                       aria-haspopup="true"
-                      className={`nav-link flex items-center gap-1.5 text-sm font-semibold transition-colors ${
-                        scrolled ? "text-inkdeep hover:text-coraldeep" : "text-cream hover:text-goldsoft"
-                      } ${active === l.href ? "active text-coraldeep" : ""}`}
+                      className={({ isActive }) =>
+                        `nav-link flex items-center gap-1.5 text-sm font-semibold transition-colors hover:text-coraldeep ${
+                          isActive ? "active text-coraldeep" : "text-inkdeep"
+                        }`
+                      }
                     >
                       {l.label}
-                      <IconChevron
-                        className={`size-3.5 transition-transform duration-300 ${mega ? "rotate-90 text-gold" : ""}`}
-                      />
-                    </a>
+                      <IconChevron className={`size-3.5 transition-transform duration-300 ${mega ? "rotate-90 text-gold" : ""}`} />
+                    </NavLink>
                   </div>
                 ) : (
-                  <a
-                    key={l.href}
-                    href={l.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      go(l.href);
-                    }}
-                    className={`nav-link text-sm font-semibold transition-colors ${
-                      scrolled ? "text-inkdeep hover:text-coraldeep" : "text-cream hover:text-goldsoft"
-                    } ${active === l.href ? "active text-coraldeep" : ""}`}
+                  <NavLink
+                    key={l.to}
+                    to={l.to}
+                    end={l.end}
+                    className={({ isActive }) =>
+                      `nav-link text-sm font-semibold transition-colors hover:text-coraldeep ${
+                        isActive ? "active text-coraldeep" : "text-inkdeep"
+                      }`
+                    }
                   >
                     {l.label}
-                  </a>
+                  </NavLink>
                 ),
               )}
             </nav>
 
             <div className="flex items-center gap-2.5">
-              <a
-                href="#footer"
-                className={`hidden items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-semibold transition-all duration-300 md:flex ${
-                  scrolled
-                    ? "border-sand text-ink hover:border-gold hover:text-gold"
-                    : "border-cream/30 text-cream hover:border-goldsoft hover:text-goldsoft"
-                }`}
+              <Link
+                to="/admin"
+                className="hidden items-center gap-2 rounded-lg border border-sand px-4 py-2.5 text-sm font-semibold text-ink transition-all duration-300 hover:border-gold hover:text-gold md:flex"
               >
                 <IconUser className="size-4" />
                 ورود / ثبت‌نام
-              </a>
+              </Link>
 
               <button
                 onClick={openCart}
                 aria-label={`سبد خرید — ${count} کالا`}
-                className={`relative grid size-11 place-items-center rounded-lg border transition-all duration-300 ${
-                  scrolled
-                    ? "border-sand text-ink hover:border-coral hover:text-coraldeep"
-                    : "border-cream/30 text-cream hover:border-goldsoft hover:text-goldsoft"
-                }`}
+                className="relative grid size-11 place-items-center rounded-lg border border-sand text-ink transition-all duration-300 hover:border-coral hover:text-coraldeep"
               >
                 <IconCart className="size-5" />
                 {count > 0 && (
@@ -358,34 +300,31 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
                 )}
               </button>
 
-              <a
-                href="#shop"
+              <Link
+                to="/shop"
                 className="hidden items-center gap-2 rounded-lg bg-coral px-5 py-2.5 text-sm font-bold text-cream transition-all duration-300 hover:bg-coraldeep hover:shadow-glow lg:flex"
               >
                 مشاهده محصولات
                 <IconArrow className="size-4" />
-              </a>
+              </Link>
 
               <button
                 onClick={() => setDrawer(true)}
                 aria-label="باز کردن منو"
-                className={`grid size-11 place-items-center rounded-lg border transition-colors xl:hidden ${
-                  scrolled ? "border-sand text-ink" : "border-cream/30 text-cream"
-                }`}
+                className="grid size-11 place-items-center rounded-lg border border-sand text-ink transition-colors xl:hidden"
               >
                 <IconMenu className="size-5" />
               </button>
             </div>
           </div>
 
-          {/* mega menu */}
           <MegaPanel
             open={mega && !drawer}
             onEnter={openMega}
             onLeave={scheduleCloseMega}
-            onCategory={onCategory}
-            onBrand={onBrand}
-            onAll={onAllProducts}
+            onCategory={catFromMega}
+            onBrand={brandFromMega}
+            onAll={allFromMega}
             close={() => setMega(false)}
           />
         </div>
@@ -420,16 +359,14 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
           <ul className="space-y-1">
             {LINKS.map((l) =>
               l.mega ? (
-                <li key={l.href}>
+                <li key={l.to}>
                   <button
                     onClick={() => setMegaMobile((o) => !o)}
                     aria-expanded={megaMobile}
                     className="flex w-full items-center justify-between rounded-lg px-4 py-3 text-base font-bold text-inkdeep transition-colors hover:bg-cream hover:text-coraldeep"
                   >
                     {l.label}
-                    <IconChevron
-                      className={`size-4 text-mistlight transition-transform duration-300 ${megaMobile ? "rotate-90 text-gold" : ""}`}
-                    />
+                    <IconChevron className={`size-4 text-mistlight transition-transform duration-300 ${megaMobile ? "rotate-90 text-gold" : ""}`} />
                   </button>
                   <div className={`acc-body ${megaMobile ? "open" : ""}`}>
                     <div>
@@ -442,9 +379,7 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
                             >
                               <img src={c.img} alt={c.name} className="size-10 rounded-md object-cover" />
                               <span className="min-w-0">
-                                <span className="block truncate text-[0.78rem] font-bold text-inkdeep group-hover:text-coraldeep">
-                                  {c.name}
-                                </span>
+                                <span className="block truncate text-[0.78rem] font-bold text-inkdeep group-hover:text-coraldeep">{c.name}</span>
                                 <span className="block text-[0.62rem] text-mistlight">
                                   {faDigits(PRODUCTS.filter((p) => p.catId === c.id).length)} محصول
                                 </span>
@@ -457,19 +392,19 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
                   </div>
                 </li>
               ) : (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      go(l.href);
-                    }}
-                    className={`block rounded-lg px-4 py-3 text-base font-bold transition-colors ${
-                      active === l.href ? "bg-cream text-coraldeep" : "text-inkdeep hover:bg-cream hover:text-coraldeep"
-                    }`}
+                <li key={l.to}>
+                  <NavLink
+                    to={l.to}
+                    end={l.end}
+                    onClick={() => setDrawer(false)}
+                    className={({ isActive }) =>
+                      `block rounded-lg px-4 py-3 text-base font-bold transition-colors ${
+                        isActive ? "bg-cream text-coraldeep" : "text-inkdeep hover:bg-cream hover:text-coraldeep"
+                      }`
+                    }
                   >
                     {l.label}
-                  </a>
+                  </NavLink>
                 </li>
               ),
             )}
@@ -481,10 +416,7 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
               {BRANDS.map((b) => (
                 <button
                   key={b.en}
-                  onClick={() => {
-                    setDrawer(false);
-                    onBrand(b.en);
-                  }}
+                  onClick={() => brandFromMega(b.en)}
                   className="font-latin rounded-full border border-sand bg-cream px-3.5 py-1.5 text-xs tracking-wider text-ink transition-all hover:border-coral hover:text-coraldeep"
                 >
                   {b.en}
@@ -495,13 +427,14 @@ export default function Nav({ onCategory, onBrand, onAllProducts }: NavProps) {
         </nav>
 
         <div className="space-y-3 border-t border-sand bg-cream px-5 py-5">
-          <a
-            href="#footer"
+          <Link
+            to="/admin"
+            onClick={() => setDrawer(false)}
             className="flex items-center justify-center gap-2 rounded-lg border border-sand py-3 text-sm font-bold text-ink transition-colors hover:border-gold hover:text-gold"
           >
             <IconUser className="size-4" />
             ورود / ثبت‌نام
-          </a>
+          </Link>
           <button
             onClick={() => {
               setDrawer(false);

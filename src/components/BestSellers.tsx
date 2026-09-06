@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { faNumber, faPrice } from "../data";
 import { useAdminStore } from "../adminStore";
 import { useCart } from "../store";
@@ -183,13 +184,13 @@ export default function BestSellers() {
         </div>
 
         <Reveal delay={150} className="mt-10 text-center">
-          <a
-            href="#shop"
+          <Link
+            to="/shop"
             className="group inline-flex items-center gap-2 text-sm font-bold text-goldsoft transition-colors hover:text-coral"
           >
             مشاهده همه محصولات فروشگاه
             <IconArrow className="size-4 transition-transform duration-300 group-hover:-translate-x-1.5" />
-          </a>
+          </Link>
         </Reveal>
       </div>
     </section>
